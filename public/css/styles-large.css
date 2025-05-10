@@ -1,0 +1,65 @@
+@media screen and (min-width: 700px) {
+    body { 
+      background-image: url("../images/site/checkerboard.jpg");
+      background-position: center;
+      background-size: 300px 300px; 
+    }
+    
+    #wrapper {
+      max-width: 1200px;
+      justify-self: center;
+      width: 80%;
+      background-color: white;
+      border: 6px solid var(--blue);
+      border-radius: 5px;
+      padding: 0px 10px;
+    }
+
+    .hero {
+        max-height: 400px;
+    }
+
+    #hero-image {
+        display: block;
+        margin: auto;
+        max-width: 400px;
+        width: 100%;
+    }
+
+    .call-to-action h3 {
+        font-size: 1.3em;
+    }
+
+    .call-to-action p {
+        margin-bottom: 10px;
+        font-size: 1.2em;
+    }
+
+    .info-wrapper {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-around;
+        gap: 20px;
+    }
+
+    .reviews {
+        width: 50%;
+    }
+
+    .upgrades-wrapper {
+        width: 50%;
+        margin-bottom: 50px;
+    }
+
+    .upgrades {
+        margin: 0;
+    }
+
+    ul > li {
+        margin-bottom: 20px;
+    }
+
+    .info-wrapper h2 {
+        margin-bottom: 40px;
+    }
+}

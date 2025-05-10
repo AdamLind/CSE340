@@ -4,3 +4,126 @@
 *:after {
   box-sizing: border-box;
 }
+
+:root {
+  --blue: rgb(0, 173, 216);
+}
+
+
+body {
+  margin: 0;
+  font-family: roboto;
+}
+  
+main {
+  margin: 0px 5px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h3, p {
+  margin: 0;
+}
+
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 5px;
+  font-weight: 600;
+}
+
+#top-header a {
+}
+
+#top-header span a {
+  font-size: 2rem;
+}
+
+nav ul {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+nav ul li {
+  width: 100%;
+  text-align: center;
+}
+
+nav ul li a {
+  display: block;
+  padding: 10px 0px;
+  width: 100%;
+  background-color:rgb(54, 54, 54);
+  color: white;
+  font-size: 1.2rem;
+}
+
+.hero {
+  position: relative;
+}
+
+#hero-image {
+  width: 100%;
+}
+
+.call-to-action {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.75);
+  left: 5px;
+  top: 5px;
+  color: var(--blue);
+}
+
+.call-link {
+  display: inline-block;
+  padding: 10px;
+  margin: 5px 0;
+  background-color: var(--blue);
+  border: 1px solid gray;
+  font-weight: bold;
+}
+
+.reviews ul {
+  padding: 0 0 0 15px;
+}
+
+figure {
+  margin: 0;
+  text-align: center;
+}
+
+figure a {
+  color: blue;
+  text-decoration: underline;
+}
+
+.upgrades {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+  margin: 10px;
+}
+
+
+.upgrade-background {
+  background-color: var(--blue);
+  border: 2px solid gray;
+  padding: 10px;
+  height: 90px;
+}
+
+.upgrade-background img {
+  display: block;
+  margin: auto;
+}
