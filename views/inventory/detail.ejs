@@ -1,0 +1,16 @@
+<% if (title) { %>
+<h1 class="detail-title"><%= vehicle.inv_year + ' ' + title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<div class="car-detail-wrapper">
+  <img src="<%= vehicle.inv_image %>" alt="<%= vehicle.inv_make + ' ' + vehicle.inv_model %>" class=" car-detail-image">
+  <div class=" car-details">
+    <h2><%= vehicle.inv_make + ' ' + vehicle.inv_model%> Details</h2>
+    <p><strong>Price:</strong> <%= vehicle.formatted_price %></p>
+    <p><strong>Description:</strong> <%= vehicle.inv_description %></p>
+    <p><strong>Color:</strong> <%= vehicle.inv_color %></p>
+    <p><strong>Miles:</strong> <%= vehicle.formatted_miles %></p>
+  </div>
+</div>

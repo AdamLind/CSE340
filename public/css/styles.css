@@ -48,6 +48,7 @@ h3, p {
 
 nav ul {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   list-style-type: none;
   padding: 0;
@@ -58,15 +59,20 @@ nav ul {
 nav ul li {
   width: 100%;
   text-align: center;
+  padding: 10px 3px;
+  background-color:rgb(54, 54, 54);
 }
 
-nav ul li a {
-  display: block;
-  padding: 10px 0px;
-  width: 100%;
-  background-color:rgb(54, 54, 54);
+.nav-link {
   color: white;
   font-size: 1.2rem;
+  padding: 5px;
+  border-radius: 10px
+}
+
+.nav-link:hover {
+  background-color: white;
+  color: rgb(54, 54, 54);
 }
 
 .hero {
@@ -126,4 +132,73 @@ figure a {
 .upgrade-background img {
   display: block;
   margin: auto;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  text-align: center;
+  padding: 10px;
+}
+
+.error-link {
+  text-decoration: underline;
+  color: blue;
+}
+
+
+/* INVENTORY SECTION */
+#inv-display {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 200px));
+  gap: 1rem;
+  padding: 0 20px;
+  justify-content: center;
+}
+
+#inv-display li {
+  border: 1px solid rgb(187, 187, 187);
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+
+}
+
+#inv-display li img {
+  width: 100%;
+  height: 50%;
+}
+
+/* DETAILS SECTION */
+
+.detail-title {
+  text-align: center;
+}
+
+.car-detail-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.car-detail-image {
+  aspect-ratio: auto;
+  height: auto;
+}
+
+.car-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.car-details p {
+  padding: 10px 0;
+}
+
+.car-details p:nth-child(even) {
+  background-color: #f2f2f2;
 }

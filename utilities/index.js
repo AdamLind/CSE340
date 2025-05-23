@@ -7,11 +7,11 @@ const Util = {}
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
   let list = "<ul>"
-  list += '<li><a href="/" title="Home page">Home</a></li>'
+  list += '<li><a class="nav-link" href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
     list += "<li>"
     list +=
-      '<a href="/inv/type/' +
+      '<a class="nav-link" href="/inv/type/' +
       row.classification_id +
       '" title="See our inventory of ' +
       row.classification_name +
@@ -56,6 +56,12 @@ Util.buildClassificationGrid = async function(data){
   }
   return grid
 }
+
+// Util.buildVehicleInfo = async function(data){
+//   let data = await invModel
+//   let info = `<div>`
+//   info += `</div>`
+// }
 
 /* ****************************************
  * Middleware For Handling Errors
