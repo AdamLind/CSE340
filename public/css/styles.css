@@ -9,12 +9,11 @@
   --blue: rgb(0, 173, 216);
 }
 
-
 body {
   margin: 0;
   font-family: roboto;
 }
-  
+
 main {
   margin: 0px 5px;
 }
@@ -28,7 +27,8 @@ h2 {
   font-size: 1.2rem;
 }
 
-h3, p {
+h3,
+p {
   margin: 0;
 }
 
@@ -60,14 +60,14 @@ nav ul li {
   width: 100%;
   text-align: center;
   padding: 10px 3px;
-  background-color:rgb(54, 54, 54);
+  background-color: rgb(54, 54, 54);
 }
 
 .nav-link {
   color: white;
   font-size: 1.2rem;
   padding: 5px;
-  border-radius: 10px
+  border-radius: 10px;
 }
 
 .nav-link:hover {
@@ -121,7 +121,6 @@ figure a {
   margin: 10px;
 }
 
-
 .upgrade-background {
   background-color: var(--blue);
   border: 2px solid gray;
@@ -147,7 +146,6 @@ footer {
   color: blue;
 }
 
-
 /* INVENTORY SECTION */
 #inv-display {
   list-style: none;
@@ -163,7 +161,6 @@ footer {
   border-radius: 10px;
   overflow: hidden;
   text-align: center;
-
 }
 
 #inv-display li img {
@@ -201,4 +198,80 @@ footer {
 
 .car-details p:nth-child(even) {
   background-color: #f2f2f2;
+}
+
+/* LOGIN SECTION */
+body {
+  margin: auto;
+}
+
+.account-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 50%;
+  min-width: 200px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.flash {
+  background-color:rgb(188 225 255);
+  color:rgb(0, 119, 255);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgb(0, 119, 255);
+}
+.register-link {
+  margin-top: 1rem;
+  display: block;
+  text-align: center;
+}
+
+/* REGISTRATION SECTION */
+
+.account-button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.account-button:hover {
+  background-color: #0056b3;
+}
+
+.form-note {
+  font-size: 0.875rem;
+  color: #666;
+  margin-top: -0.5rem;
+}
+.toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+}
+
+label {
+  font-weight: 600;
+}
+
+.data-error-message {
+  color: red;
 }
