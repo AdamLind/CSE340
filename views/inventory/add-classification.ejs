@@ -1,0 +1,30 @@
+<div class="add-classification-wrapper">
+  <h1>Add New Classification</h1>
+
+  <% try { %> <% if (flash && flash.notice && flash.notice.length > 0) { %>
+  <div class="flash"><%= flash.notice[0] %></div>
+  <% } %> <% if (errors && errors.length > 0) { %>
+  <ul class="notice">
+    <% errors.forEach(error => { %>
+    <li class="data-error-message"><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %> <% } catch (e) { %>
+  <p>Error rendering errors</p>
+  <% } %>
+
+  <form action="/inv/add-classification" method="POST">
+    <label for="classification_name"
+      >Classification Name (no spaces/special chars):</label
+    >
+    <input
+      type="text"
+      id="classification_name"
+      name="classification_name"
+      pattern="^[A-Za-z0-9]+$"
+      value="<%= typeof classification_name !== 'undefined' ? classification_name : '' %>"
+      required
+    />
+    <button type="submit">Add Classification</button>
+  </form>
+</div>

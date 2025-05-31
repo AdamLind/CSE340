@@ -1,0 +1,30 @@
+<div class="management-wrapper">
+  <div class="management-header-wrapper">
+    <h1><%= title %></h1>
+  
+    <% try { %> <% if (flash && flash.notice && flash.notice.length > 0) { %>
+    <div class="flash"><%= flash.notice[0] %></div>
+    <% } %> <% if (errors && errors.length > 0) { %>
+    <ul class="notice">
+      <% errors.forEach(error => { %>
+      <li class="data-error-message"><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %> <% } catch (e) { %>
+    <p>Error rendering errors</p>
+    <% } %>
+  </div>
+
+  <ul class="management-nav">
+    <li>
+      <a class="management-links" href="/inv/add-classification"
+        >Add New Classification</a
+      >
+    </li>
+    <li>
+      <a class="management-links" href="/inv/add-inventory"
+        >Add New Inventory</a
+      >
+    </li>
+  </ul>
+</div>

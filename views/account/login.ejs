@@ -1,36 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-  </head>
-  <body>
-    <div class="account-wrapper">
-      <h1><%= title %></h1>
+<div class="account-wrapper">
+  <h1><%= title %></h1>
 
-      <% if (flash && flash.notice && flash.notice.length > 0) { %>
-      <div class="flash"><%= flash.notice[0] %></div>
-      <% } %>
+  <% if (flash && flash.notice && flash.notice.length > 0) { %>
+  <div class="flash"><%= flash.notice[0] %></div>
+  <% } %>
 
-      <form action="/login" method="POST">
-        <label for="email">Email address:</label>
-        <input type="email" id="email" name="email" required />
+  <form action="/login" method="POST">
+    <label for="email">Email address:</label>
+    <input type="email" id="email" name="email" required />
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required />
-        <div class="form-note">
-          There must be at least 12 characters, one must be a number, one must
-          be a lowercase letter, one must be a capital letter, and one must be a
-          non-alphanumeric character..
-        </div>
-
-        <button class="account-button" type="submit">Log In</button>
-      </form>
-
-      <a class="register-link" href="/account/register"
-        >Don’t have an account? Register here.</a
-      >
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" required />
+    <div class="form-note">
+      There must be at least 12 characters, one must be a number, one must
+      be a lowercase letter, one must be a capital letter, and one must be a
+      non-alphanumeric character..
     </div>
-  </body>
-</html>
+
+    <button class="account-button" type="submit">Log In</button>
+  </form>
+
+  <a class="register-link" href="/account/register"
+    >Don’t have an account? Register here.</a
+  >
+</div>
