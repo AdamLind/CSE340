@@ -16,19 +16,19 @@
     <label for="first_name">First Name:</label>
     <input
       type="text"
-      id="first_name"
       name="account_firstname"
+      id="accountFirstname"
       required
-      value="<%= typeof first_name !== 'undefined' ? first_name : '' %>"
+      value="<%= locals.account_firstname %>"
     />
 
     <label for="last_name">Last Name:</label>
     <input
       type="text"
-      id="last_name"
       name="account_lastname"
+      id="accountLastname"
       required
-      value="<%= typeof last_name !== 'undefined' ? last_name : '' %>"
+      value="<%= locals.account_lastname %>"
     />
 
     <label for="email">Email Address:</label>
@@ -37,7 +37,7 @@
       id="email"
       name="account_email"
       required
-      value="<%= typeof email !== 'undefined' ? email : '' %>"
+      value="<%= locals.account_email %>"
     />
 
     <label for="password">Password:</label>
@@ -49,8 +49,8 @@
       pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"
     />
     <div class="form-note">
-      There must be at least 12 characters, one must be a number, one must
-      be a lowercase letter, one must be a capital letter, and one must be a
+      There must be at least 12 characters, one must be a number, one must be a
+      lowercase letter, one must be a capital letter, and one must be a
       non-alphanumeric character..
     </div>
 
@@ -64,11 +64,10 @@
 </div>
 
 <script>
-const toggle = document.getElementById("togglePassword");
-const passwordField = document.getElementById("password");
+  const toggle = document.getElementById("togglePassword");
+  const passwordField = document.getElementById("password");
 
-toggle.addEventListener("change", () => {
-  passwordField.type = toggle.checked ? "text" : "password";
-});
+  toggle.addEventListener("change", () => {
+    passwordField.type = toggle.checked ? "text" : "password";
+  });
 </script>
-

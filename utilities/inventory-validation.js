@@ -69,4 +69,37 @@ validate.checkInventoryData = async (req, res, next) => {
   next()
 }
 
+validate.newInventoryRules = () => {
+  return [
+    body("classification_id").isInt().withMessage("Please choose a valid classification."),
+    body("inv_make").trim().notEmpty().withMessage("Please enter a make.").matches(/^[A-Za-z0-9\s]+$/).withMessage("Make must not contain special characters."),
+    body("inv_model").trim().notEmpty().withMessage("Please enter a model.").matches(/^[A-Za-z0-9\s]+$/).withMessage("Model must not contain special characters."),
+    body("inv_description").trim().notEmpty().withMessage("Please enter a description."),
+    body("inv_image").trim().notEmpty().withMessage("Please enter an image path."),
+    body("inv_thumbnail").trim().notEmpty().withMessage("Please enter a thumbnail path."),
+    body("inv_price").isFloat({ gt: 0 }).withMessage("Please enter a valid price."),
+    body("inv_year").isInt({ min: 1900, max: 2100 }).withMessage("Enter a valid year."),
+    body("inv_miles").isInt({ min: 0 }).withMessage("Enter a valid mileage."),
+    body("inv_color").trim().notEmpty().withMessage("Enter a color.").matches(/^[A-Za-z0-9\s]+$/).withMessage("Color must not contain special characters."),
+  ]
+}
+
+validate.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    const classificationList = await utilities.buildClassificationList(req.body.classification_id)
+    let nav = await utilities.getNav()
+    res.render("inventory/edit-inventory", {
+      inv_id: req.params.id,
+      title: "Edit Vehicle",
+      nav,
+      classificationList,
+      errors: errors.array(),
+      ...req.body, // Sticky values
+    })
+    return
+  }
+  next()
+}
+
 module.exports = validate;

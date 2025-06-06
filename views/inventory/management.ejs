@@ -1,7 +1,7 @@
 <div class="management-wrapper">
   <div class="management-header-wrapper">
     <h1><%= title %></h1>
-  
+
     <% try { %> <% if (flash && flash.notice && flash.notice.length > 0) { %>
     <div class="flash"><%= flash.notice[0] %></div>
     <% } %> <% if (errors && errors.length > 0) { %>
@@ -26,5 +26,13 @@
         >Add New Inventory</a
       >
     </li>
+    <h2>Manage Inventory</h2>
+    <p>Select a classification to manage its inventory items.</p>
+    <%- classificationSelect %>
+    <table id="inventoryDisplay"></table>
+
+    <noscript>JavaScript must be enabled to use this page.</noscript>
   </ul>
 </div>
+
+<script src="../../js/inventory.js"></script>
