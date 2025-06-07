@@ -183,11 +183,9 @@ async function updateAccount(req, res) {
 
     if (updateResult) {
       const updatedAccount = await accountModel.getAccountById(accountId);
-      const token = jwt.sign(
-        updatedAccount,
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: 3600 * 1000 }
-      );
+      const token = jwt.sign(updatedAccount, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn: 3600 * 1000,
+      });
       res.cookie("jwt", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV !== "development",
@@ -217,13 +215,11 @@ async function changePassword(req, res) {
   }
 
   try {
-    // ✅ Re-fetch the latest account from the DB
     const accountFromDB = await accountModel.getAccountById(accountId);
-
-    console.log("Changing password for account ID:", accountId);
-
-    // ✅ Compare entered current password with the latest stored hash
-    const isMatch = await bcrypt.compare(current_password, accountFromDB.account_password);
+    const isMatch = await bcrypt.compare(
+      current_password,
+      accountFromDB.account_password
+    );
 
     if (!isMatch) {
       req.flash("notice", "Current password is incorrect.");
@@ -233,7 +229,6 @@ async function changePassword(req, res) {
     const hashedNewPassword = bcrypt.hashSync(new_password, 10);
     await accountModel.updateAccountPassword(accountId, hashedNewPassword);
 
-    // ✅ Update JWT with new info (if needed)
     const updatedAccount = await accountModel.getAccountById(accountId);
     const token = jwt.sign(updatedAccount, process.env.ACCESS_TOKEN_SECRET, {
       expiresIn: "1h",
@@ -248,7 +243,6 @@ async function changePassword(req, res) {
     return res.redirect(`/account/update/${accountId}`);
   }
 }
-
 
 async function logout(req, res) {
   res.clearCookie("jwt");

@@ -50,8 +50,6 @@ app.use(function (req, res, next) {
 app.use(utilities.checkJWTToken);
 
 app.use((req, res, next) => {
-  // Make `user` and `authenticated` available in templates
-  console.log("req.locals.accountData:", res.locals.accountData);
   res.locals.authenticated = req.user ? !req.user.anonymous : false;
   next();
 });

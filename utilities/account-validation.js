@@ -126,8 +126,6 @@ validate.checkLoginData = async (req, res, next) => {
 };
 
 validate.updateAccountRules = () => {
-  console.log("updateAccountRules called");
-  // const accountId = parseInt(req.params.account_id);
   return [
     // firstname is required and must be string
     body("account_firstname")
@@ -171,7 +169,6 @@ validate.updateAccountRules = () => {
 };
 
 validate.checkUpdateData = async (req, res, next) => {
-  console.log("checkUpdateData called");
   const { account_firstname, account_lastname, account_email } = req.body;
   const errors = validationResult(req);
   console.log(errors);
@@ -211,7 +208,6 @@ validate.updatePasswordRules = () => {
 };
 
 validate.checkUpdatePasswordData = async (req, res, next) => {
-  console.log("checkUpdatePasswordData called");
   const { current_password, new_password } = req.body;
   const errors = validationResult(req);
   console.log(errors);
