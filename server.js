@@ -18,7 +18,7 @@ const accountRoute = require("./routes/accountRoute");
 const utilities = require("./utilities/");
 const errorRoute = require("./routes/errorRoute");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser");
 
 /* ***********************
  * Middleware
@@ -38,7 +38,7 @@ app.use(
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(cookieParser())
+app.use(cookieParser());
 
 // Express Messages Middleware
 app.use(require("connect-flash")());
@@ -48,6 +48,13 @@ app.use(function (req, res, next) {
   next();
 });
 app.use(utilities.checkJWTToken);
+
+app.use((req, res, next) => {
+  // Make `user` and `authenticated` available in templates
+  console.log("req.locals.accountData:", res.locals.accountData);
+  res.locals.authenticated = req.user ? !req.user.anonymous : false;
+  next();
+});
 
 /* ***********************
  * View Engine and Templates

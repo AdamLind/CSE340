@@ -113,7 +113,6 @@ async function accountLogin(req, res) {
   }
   try {
     if (await bcrypt.compare(account_password, accountData.account_password)) {
-      console.log("Made it this far, logging in...");
       delete accountData.account_password;
       const accessToken = jwt.sign(
         accountData,
@@ -146,10 +145,124 @@ async function accountLogin(req, res) {
   }
 }
 
+async function buildUpdate(req, res) {
+  let nav = await utilities.getNav();
+  const accountId = parseInt(req.params.account_id);
+  const accountData = res.locals.accountData;
+
+  if (!accountData) {
+    req.flash("notice", "Account not found.");
+    return res.redirect("/account/");
+  }
+
+  res.render("account/update", {
+    title: "Update Account",
+    nav,
+    accountData,
+    errors: null,
+  });
+}
+
+async function updateAccount(req, res) {
+  const accountId = parseInt(req.params.account_id);
+  const { account_firstname, account_lastname, account_email } = req.body;
+  const accountData = res.locals.accountData;
+
+  if (!accountData || accountData.account_id !== accountId) {
+    req.flash("notice", "You are not authorized to update this account.");
+    return res.redirect("/account/update/" + accountId);
+  }
+
+  try {
+    const updateResult = await accountModel.updateAccount(
+      accountId,
+      account_firstname,
+      account_lastname,
+      account_email
+    );
+
+    if (updateResult) {
+      const updatedAccount = await accountModel.getAccountById(accountId);
+      const token = jwt.sign(
+        updatedAccount,
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: 3600 * 1000 }
+      );
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV !== "development",
+        maxAge: 3600 * 1000,
+      });
+      req.flash("notice", "Account successfully updated.");
+      return res.redirect("/account/");
+    } else {
+      throw new Error("Update failed");
+    }
+  } catch (error) {
+    console.error("Error updating account:", error);
+    req.flash("notice", "Error updating account. Please try again.");
+    return res.redirect(`/account/update/${accountId}`);
+  }
+}
+
+async function changePassword(req, res) {
+  const accountId = parseInt(req.params.account_id);
+  const { current_password, new_password } = req.body;
+
+  const jwtData = res.locals.accountData;
+
+  if (!jwtData || jwtData.account_id !== accountId) {
+    req.flash("notice", "You are not authorized to change this password.");
+    return res.redirect("/account/update/" + accountId);
+  }
+
+  try {
+    // ✅ Re-fetch the latest account from the DB
+    const accountFromDB = await accountModel.getAccountById(accountId);
+
+    console.log("Changing password for account ID:", accountId);
+
+    // ✅ Compare entered current password with the latest stored hash
+    const isMatch = await bcrypt.compare(current_password, accountFromDB.account_password);
+
+    if (!isMatch) {
+      req.flash("notice", "Current password is incorrect.");
+      return res.redirect(`/account/update/${accountId}`);
+    }
+
+    const hashedNewPassword = bcrypt.hashSync(new_password, 10);
+    await accountModel.updateAccountPassword(accountId, hashedNewPassword);
+
+    // ✅ Update JWT with new info (if needed)
+    const updatedAccount = await accountModel.getAccountById(accountId);
+    const token = jwt.sign(updatedAccount, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1h",
+    });
+    res.cookie("jwt", token, { httpOnly: true });
+
+    req.flash("notice", "Password successfully changed.");
+    return res.redirect("/account/");
+  } catch (error) {
+    console.error("Error changing password:", error);
+    req.flash("notice", "Error changing password. Please try again.");
+    return res.redirect(`/account/update/${accountId}`);
+  }
+}
+
+
+async function logout(req, res) {
+  res.clearCookie("jwt");
+  res.redirect("/");
+}
+
 module.exports = {
   buildLogin,
   buildAccount,
   buildRegister,
   registerAccount,
   accountLogin,
+  buildUpdate,
+  updateAccount,
+  changePassword,
+  logout,
 };

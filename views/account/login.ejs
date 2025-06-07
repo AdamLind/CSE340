@@ -3,15 +3,15 @@
 
   <% if (flash && flash.notice && flash.notice.length > 0) { %>
   <div class="flash"><%= flash.notice[0] %></div>
-  <% } %> 
-  <% if (errors) { %>
+  <% } %> <% if (flash && flash.problem && flash.problem.length > 0) { %>
+  <div class="flash notice"><%= flash.problem[0] %></div>
+  <% } %> <% if (errors) { %>
   <ul class="notice">
     <% errors.array().forEach(error => { %>
     <li class="data-error-message"><%= error.msg %></li>
     <% }) %>
   </ul>
   <% } %>
-
   <form id="loginForm" action="/account/login" method="POST">
     <label for="email">Email address:</label>
     <input

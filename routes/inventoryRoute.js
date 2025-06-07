@@ -5,11 +5,22 @@ const invController = require("../controllers/invController");
 const invValidate = require("../utilities/inventory-validation");
 const utilities = require("../utilities/");
 
-router.get("/", utilities.handleErrors(invController.buildManagementView));
+router.get(
+  "/",
+  utilities.checkAdminOrEmployee,
+  utilities.handleErrors(invController.buildManagementView)
+);
 
 router.get(
   "/edit/:inv_id",
+  utilities.checkAdminOrEmployee,
   utilities.handleErrors(invController.editInventoryView)
+);
+
+router.get(
+  "/delete/:inv_id",
+  utilities.checkAdminOrEmployee,
+  utilities.handleErrors(invController.deleteConfirmView)
 );
 
 router.get(
@@ -37,6 +48,11 @@ router.get(
 router.get(
   "/add-inventory",
   utilities.handleErrors(invController.buildAddInventoryView)
+);
+
+router.post(
+  "/delete/:inv_id",
+  utilities.handleErrors(invController.deleteInventoryItem)
 );
 
 router.post(

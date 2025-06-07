@@ -1,0 +1,25 @@
+
+<div class="delete-confirm-container">
+    <h2>Delete Vehicle</h2>
+    <p>Confirm Deletion - The deletion is permanent.</p>
+    <form action="/inv/delete/<%= inv_id %>" method="post">
+        <fieldset>
+            <label for="invMake">Make</label>
+            <input type="text" id="invMake" readonly <% if(locals.inv_make) { %> value="<%= inv_make %>" <% } %>>
+
+            <label for="invModel">Model</label>
+            <input type="text" id="invModel" readonly <% if(locals.inv_model) { %> value="<%= inv_model %>" <% } %>>
+
+            <label for="invPrice">Price</label>
+            <input type="text" id="invPrice" readonly <% if(locals.inv_price) { %> value="<%= inv_price %>" <% } %>>
+
+            <label for="invYear">Year</label>
+            <input type="text" id="invYear" readonly <% if(locals.inv_year) { %> value="<%= inv_year %>" <% } %>>
+            <input type="hidden" name="inv_id" <% if(inv_id) { %> value="<%= inv_id %>" <% } %>>
+        </fieldset>
+        <div class="actions">
+            <input type="submit" value="Delete">
+            <a href="/inv" class="cancel-link">Cancel</a>
+        </div>
+    </form>
+</div>

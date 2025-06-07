@@ -11,5 +11,22 @@
   </ul>
   <% } %>
 
-  <h1>You're logged in!</h1>
+  <h2>Welcome <%= locals.accountData.account_firstname %>!</h2>
+  <% if (locals.accountData.account_type == "Admin" ||
+  locals.accountData.account_type == "Employee") { %>
+  <h3>You have administrative privileges.</h3>
+  <% } %>
+  <div class="account-buttons">
+    <p>
+      <a
+        href="/account/update/<%= locals.accountData.account_id %>"
+        class="generic-button"
+        >Update Account Info</a
+      >
+    </p>
+    <% if (locals.accountData.account_type == "Admin" ||
+    locals.accountData.account_type == "Employee") { %>
+    <p><a class="generic-button" href="/inv">Manage Inventory</a></p>
+    <% } %>
+  </div>
 </div>

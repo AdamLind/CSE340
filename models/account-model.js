@@ -30,7 +30,7 @@ async function checkExistingEmail(account_email) {
   try {
     const sql = "SELECT * FROM account WHERE account_email = $1";
     const email = await pool.query(sql, [account_email]);
-    return email.rowCount;
+    return email.rows[0].account_email;
   } catch (error) {
     return error.message;
   }
@@ -51,4 +51,57 @@ async function getAccountByEmail(account_email) {
   }
 }
 
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail };
+async function updateAccount(
+  accountId,
+  account_firstname,
+  account_lastname,
+  account_email
+) {
+  console.log("updateAccount called");
+  try {
+    const sql =
+      "UPDATE account SET account_firstname = $1, account_lastname = $2, account_email = $3 WHERE account_id = $4 RETURNING *";
+    const result = await pool.query(sql, [
+      account_firstname,
+      account_lastname,
+      account_email,
+      accountId,
+    ]);
+    console.log("Update result:", result);
+    return result;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+async function updateAccountPassword(accountId, account_password) {
+  try {
+    const sql =
+      "UPDATE account SET account_password = $1 WHERE account_id = $2 RETURNING *";
+    const result = await pool.query(sql, [account_password, accountId]);
+    console.log("Password update result:", result);
+    return result;
+  } catch (error) {
+    return error.message;
+  }
+}
+
+async function getAccountById(accountId) {
+  try {
+    const sql = "SELECT * FROM account WHERE account_id = $1";
+    const result = await pool.query(sql, [accountId]);
+    return result.rows[0];
+  } catch (error) {
+    console.error("Error fetching account by ID:", error);
+    throw new Error("Database error while fetching account");
+  }
+}
+
+module.exports = {
+  registerAccount,
+  checkExistingEmail,
+  getAccountByEmail,
+  updateAccount,
+  updateAccountPassword,
+  getAccountById,
+};
