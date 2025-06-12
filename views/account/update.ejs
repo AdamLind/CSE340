@@ -39,6 +39,20 @@
       required
     />
 
+    <% if (userData.account_type === 'Admin') { %>
+    <label for="account_type">Account Type</label>
+    <select
+      id="account_type"
+      name="account_type"
+      value="<%= typeof req !== 'undefined' && req.body && req.body.account_type ? req.body.account_type : accountData.account_type %>"
+      required
+    >
+      <option value="Client" <%= accountData.account_type === 'Client' ? 'selected' : '' %>>Client</option>
+      <option value="Employee" <%= accountData.account_type === 'Employee' ? 'selected' : '' %>>Employee</option>
+      <option value="Admin" <%= accountData.account_type === 'Admin' ? 'selected' : '' %>>Admin</option>
+    </select>
+    <% } %>
+
     <button class="generic-button" type="submit">Update Account</button>
 
     <input

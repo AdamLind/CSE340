@@ -1,84 +1,98 @@
 @media screen and (min-width: 700px) {
-    body { 
-      background-image: url("../images/site/checkerboard.jpg");
-      background-position: center;
-      background-size: 300px 300px; 
-    }
-    
-    #wrapper {
-      max-width: 1200px;
-      justify-self: center;
-      width: 80%;
-      background-color: white;
-      border: 6px solid var(--blue);
-      border-radius: 5px;
-      padding: 0px 10px;
-    }
+  body {
+    background-image: url("../images/site/checkerboard.jpg");
+    background-position: center;
+    background-size: 300px 300px;
+  }
 
-    nav ul {
-        flex-direction: row;
-    }
+  #wrapper {
+    max-width: 1200px;
+    justify-self: center;
+    width: 80%;
+    background-color: white;
+    border: 6px solid var(--blue);
+    border-radius: 5px;
+    padding: 0px 10px;
+  }
 
-    .hero {
-        max-height: 400px;
-    }
+  nav ul {
+    flex-direction: row;
+  }
 
-    #hero-image {
-        display: block;
-        margin: auto;
-        max-width: 400px;
-        width: 100%;
-    }
+  .hero {
+    max-height: 400px;
+  }
 
-    .call-to-action h3 {
-        font-size: 1.3em;
-    }
+  #hero-image {
+    display: block;
+    margin: auto;
+    max-width: 400px;
+    width: 100%;
+  }
 
-    .call-to-action p {
-        margin-bottom: 10px;
-        font-size: 1.2em;
-    }
+  .call-to-action h3 {
+    font-size: 1.3em;
+  }
 
-    .info-wrapper {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: space-around;
-        gap: 20px;
-    }
+  .call-to-action p {
+    margin-bottom: 10px;
+    font-size: 1.2em;
+  }
 
-    .reviews {
-        width: 50%;
-    }
+  .info-wrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    gap: 20px;
+  }
 
-    .upgrades-wrapper {
-        width: 50%;
-        margin-bottom: 50px;
-    }
+  .reviews {
+    width: 50%;
+  }
 
-    .upgrades {
-        margin: 0;
-    }
+  .upgrades-wrapper {
+    width: 50%;
+    margin-bottom: 50px;
+  }
 
-    .delorean-review {
-        margin-bottom: 20px;
-    }
+  .upgrades {
+    margin: 0;
+  }
 
-    .info-wrapper h2 {
-        margin-bottom: 40px;
-    }
+  .delorean-review {
+    margin-bottom: 20px;
+  }
 
-    /* CAR DETAILS PAGE */
-    .car-detail-wrapper {
-        flex-direction: row;
-        gap: 20px;
-        margin-bottom: 20px;
-    }
+  .info-wrapper h2 {
+    margin-bottom: 40px;
+  }
 
-    .car-detail-image {
-        width: 50%;
-        height: 50%;
+  /* CAR DETAILS PAGE */
+  .car-detail-wrapper {
+    flex-direction: row;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
 
-    }
+  .car-detail-image {
+    width: 50%;
+    height: 50%;
+  }
+  .manage-accounts-wrapper {
+    padding: 32px 24px;
+  }
+  .manage-accounts-table th,
+  .manage-accounts-table td {
+    padding: 8px 4px;
+    font-size: 0.95rem;
+  }
+  .action-button,
+  .inline-form button {
+    padding: 5px 10px;
+    font-size: 0.93rem;
+  }
+
+  .email-column {
+    display: table-cell;
+  }
 }
-
-

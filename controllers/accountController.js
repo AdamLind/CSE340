@@ -77,9 +77,6 @@ async function registerAccount(req, res) {
   );
 
   if (regResult) {
-    console.log(
-      `Congratulations, you\'re registered ${account_firstname}. Please log in.`
-    );
     req.flash(
       "notice",
       `Congratulations, you\'re registered ${account_firstname}. Please log in.`
@@ -148,7 +145,8 @@ async function accountLogin(req, res) {
 async function buildUpdate(req, res) {
   let nav = await utilities.getNav();
   const accountId = parseInt(req.params.account_id);
-  const accountData = res.locals.accountData;
+  const userData = res.locals.accountData;
+  const accountData = await accountModel.getAccountById(accountId);
 
   if (!accountData) {
     req.flash("notice", "Account not found.");
@@ -158,6 +156,7 @@ async function buildUpdate(req, res) {
   res.render("account/update", {
     title: "Update Account",
     nav,
+    userData,
     accountData,
     errors: null,
   });
@@ -165,10 +164,18 @@ async function buildUpdate(req, res) {
 
 async function updateAccount(req, res) {
   const accountId = parseInt(req.params.account_id);
-  const { account_firstname, account_lastname, account_email } = req.body;
-  const accountData = res.locals.accountData;
+  const { account_firstname, account_lastname, account_email, account_type } =
+    req.body;
+  const userData = res.locals.accountData;
 
-  if (!accountData || accountData.account_id !== accountId) {
+  if (
+    !userData ||
+    (userData.account_id !== accountId && userData.account_type !== "Admin")
+  ) {
+    console.log(
+      "Unauthorized update attempt by account ID:",
+      userData.account_id
+    );
     req.flash("notice", "You are not authorized to update this account.");
     return res.redirect("/account/update/" + accountId);
   }
@@ -178,10 +185,11 @@ async function updateAccount(req, res) {
       accountId,
       account_firstname,
       account_lastname,
-      account_email
+      account_email,
+      account_type
     );
 
-    if (updateResult) {
+    if (updateResult && userData.account_id === accountId) {
       const updatedAccount = await accountModel.getAccountById(accountId);
       const token = jwt.sign(updatedAccount, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: 3600 * 1000,
@@ -193,6 +201,9 @@ async function updateAccount(req, res) {
       });
       req.flash("notice", "Account successfully updated.");
       return res.redirect("/account/");
+    } else if (updateResult && userData.account_type === "Admin") {
+      req.flash("notice", "Account successfully updated.");
+      return res.redirect("/account/manage-accounts");
     } else {
       throw new Error("Update failed");
     }
@@ -244,9 +255,57 @@ async function changePassword(req, res) {
   }
 }
 
+async function buildManageAccounts(req, res) {
+  let nav = await utilities.getNav();
+  const accounts = await accountModel.getAllAccounts();
+
+  const order = {
+    Admin: 0,
+    Employee: 1,
+    Client: 2,
+  };
+
+  const sortedAccounts = accounts.sort((a, b) => order[a.account_type] - order[b.account_type]);
+
+  if (!sortedAccounts || sortedAccounts.length === 0) {
+    req.flash("notice", "No accounts found.");
+    return res.redirect("/account/");
+  }
+
+  res.render("account/manage-accounts", {
+    title: "Manage Accounts",
+    nav,
+    sortedAccounts,
+    errors: null,
+  });
+}
+
 async function logout(req, res) {
   res.clearCookie("jwt");
   res.redirect("/");
+}
+
+async function deleteAccount(req, res) {
+  const accountId = parseInt(req.params.account_id);
+  const jwtData = res.locals.accountData;
+
+  if (
+    !jwtData ||
+    (jwtData.account_id !== accountId && jwtData.account_type !== "Admin")
+  ) {
+    req.flash("notice", "You are not authorized to delete this account.");
+    return res.redirect("/account/manage-accounts");
+  }
+
+  try {
+    await accountModel.deleteAccount(accountId);
+    req.flash("notice", "Account successfully deleted.");
+    return res.redirect("/account/manage-accounts");
+  } catch (error) {
+    console.error("Error deleting account:", error);
+    req.flash("notice", "Error deleting account. Please try again.");
+    return res.redirect("/account/manage-accounts");
+  }
 }
 
 module.exports = {
@@ -258,5 +317,7 @@ module.exports = {
   buildUpdate,
   updateAccount,
   changePassword,
+  buildManageAccounts,
+  deleteAccount,
   logout,
 };

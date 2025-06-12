@@ -28,5 +28,8 @@
     locals.accountData.account_type == "Employee") { %>
     <p><a class="generic-button" href="/inv">Manage Inventory</a></p>
     <% } %>
+    <% if (locals.accountData.account_type == "Admin") { %>
+    <p><a class="generic-button" href="/account/manage-accounts">Manage Accounts</a></p>
+    <% } %>
   </div>
 </div>

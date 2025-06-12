@@ -1,0 +1,55 @@
+<div class="manage-accounts-wrapper">
+  <style>
+
+    .inline-form button:hover,
+    .inline-form button:focus {
+      background: #d9363e;
+    }
+    @media (max-width: 700px) {
+
+    }
+  </style>
+  <h1>Manage Accounts</h1>
+
+  <% if (flash && flash.notice && flash.notice.length > 0) { %>
+  <div class="flash"><%= flash.notice[0] %></div>
+  <% } %> <% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+    <li class="data-error-message"><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
+
+  <table class="manage-accounts-table">
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th class="email-column">Email</th>
+      <th>Type</th>
+      <th class="actions-header">Actions</th>
+    </tr>
+    <% sortedAccounts.forEach(account => { %>
+    <tr>
+      <td><%= account.account_firstname %></td>
+      <td><%= account.account_lastname %></td>
+      <td class="email-column"><%= account.account_email %></td>
+      <td><%= account.account_type %></td>
+      <td class="action-buttons">
+        <a
+          href="/account/update/<%= account.account_id %>"
+          class="action-button"
+          >Edit</a
+        >
+        <form
+          action="/account/delete-account/<%= account.account_id %>"
+          method="POST"
+          class="inline-form"
+        >
+          <button type="submit" class="action-button">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </table>
+</div>

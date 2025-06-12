@@ -142,7 +142,6 @@ Util.checkJWTToken = (req, res, next) => {
  *  Check Login
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
-  console.log("Checking login status..." + res.locals.loggedin);
   if (res.locals.loggedin) {
     next();
   } else {
@@ -168,5 +167,37 @@ Util.checkAdminOrEmployee = (req, res, next) => {
 
   next();
 };
+
+Util.checkAdmin = (req, res, next) => {
+  const accountData = res.locals.accountData;
+
+  if (!accountData) {
+    req.flash("notice", "Access denied. Please log in as an administrator.");
+    return res.redirect("/account/login");
+  }
+
+  if (accountData.account_type !== "Admin") {
+    req.flash("problem", "Access denied. Admin account required.");
+    return res.redirect("/account/login");
+  }
+
+  next();
+}
+
+Util.checkAdminForUpdate = (req, res, next) => {
+  const userData = res.locals.accountData;
+  const accountId = parseInt(req.params.account_id);
+  if (!userData) {
+    req.flash("notice", "Access denied. Please log in.");
+    return res.redirect("/account/login");
+  }
+
+  if (userData.account_type !== "Admin" && userData.account_id !== accountId) {
+    req.flash("problem", "Access denied. Admin account required.");
+    return res.redirect("/account/login");
+  }
+
+  next();
+}
 
 module.exports = Util;

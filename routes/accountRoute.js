@@ -35,7 +35,7 @@ router.post(
 
 router.get(
   "/update/:account_id",
-
+  utilities.checkAdminForUpdate,
   utilities.handleErrors(accountController.buildUpdate)
 );
 
@@ -53,6 +53,18 @@ router.post(
   utilities.handleErrors(accountController.changePassword)
 );
 
+router.get(
+  "/manage-accounts",
+  utilities.checkAdmin,
+  utilities.handleErrors(accountController.buildManageAccounts)
+);
+
 router.get("/logout", utilities.handleErrors(accountController.logout));
+
+router.post(
+  "/delete-account/:account_id",
+  utilities.checkAdmin,
+  utilities.handleErrors(accountController.deleteAccount)
+);
 
 module.exports = router;
