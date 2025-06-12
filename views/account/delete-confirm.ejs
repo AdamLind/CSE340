@@ -1,0 +1,53 @@
+<div class="delete-confirm-container">
+  <h2>Delete Account</h2>
+  <p>Confirm Deletion - The deletion is permanent.</p>
+  <form
+    action="/account/delete-account/<%= accountData.account_id %>"
+    method="post"
+  >
+    <fieldset>
+      <label for="account_firstname">First Name</label>
+      <input
+        type="text"
+        id="account_firstname"
+        name="account_firstname"
+        readonly
+        value="<%= accountData.account_firstname ? accountData.account_firstname :
+      '' %>"
+      />
+
+      <label for="account_lastname">Last Name</label>
+      <input
+        type="text"
+        id="account_lastname"
+        name="account_lastname"
+        readonly
+        value="<%= accountData.account_lastname ? accountData.account_lastname :
+      '' %>"
+      />
+
+      <label for="account_email">Email</label>
+      <input
+        type="text"
+        id="account_email"
+        name="account_email"
+        readonly
+        value="<%= accountData.account_email ? accountData.account_email : '' %>"
+      />
+
+      <label for="account_type">Account Type</label>
+      <input
+        type="text"
+        id="account_type"
+        name="account_type"
+        readonly
+        value="<%= accountData.account_type ? accountData.account_type : '' %>"
+      />
+      <input type="hidden" name="account_id" value="<%= accountData.account_id ? accountData.account_id : '' %>" />
+    </fieldset>
+    <div class="actions">
+      <button type="submit" class="delete-button">Delete</button>
+      <a href="/account/manage-accounts" class="cancel-link">Cancel</a>
+    </div>
+  </form>
+</div>

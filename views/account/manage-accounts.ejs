@@ -1,12 +1,10 @@
 <div class="manage-accounts-wrapper">
   <style>
-
     .inline-form button:hover,
     .inline-form button:focus {
       background: #d9363e;
     }
     @media (max-width: 700px) {
-
     }
   </style>
   <h1>Manage Accounts</h1>
@@ -41,13 +39,12 @@
           class="action-button"
           >Edit</a
         >
-        <form
-          action="/account/delete-account/<%= account.account_id %>"
-          method="POST"
-          class="inline-form"
+
+        <a
+          href="/account/delete-account/<%= account.account_id %>"
+          class="action-button delete-button"
+          >Delete</a
         >
-          <button type="submit" class="action-button">Delete</button>
-        </form>
       </td>
     </tr>
     <% }) %>

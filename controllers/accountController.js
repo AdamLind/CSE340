@@ -79,7 +79,7 @@ async function registerAccount(req, res) {
   if (regResult) {
     req.flash(
       "notice",
-      `Congratulations, you\'re registered ${account_firstname}. Please log in.`
+      `Congrats, ${account_firstname}! You\'re all set. Please log in.`
     );
     res.redirect("/account/login");
   } else {
@@ -285,6 +285,33 @@ async function logout(req, res) {
   res.redirect("/");
 }
 
+async function deleteConfirmView(req, res) {
+  const nav = await utilities.getNav();
+  const accountId = parseInt(req.params.account_id);
+  const jwtData = res.locals.accountData;
+
+  if (
+    !jwtData ||
+    (jwtData.account_id !== accountId && jwtData.account_type !== "Admin")
+  ) {
+    req.flash("notice", "You are not authorized to delete this account.");
+    return res.redirect("/account/manage-accounts");
+  }
+
+  const accountData = await accountModel.getAccountById(accountId);
+  if (!accountData) {
+    req.flash("notice", "Account not found.");
+    return res.redirect("/account/manage-accounts");
+  }
+
+  res.render("account/delete-confirm", {
+    title: "Delete Account",
+    nav,
+    accountData,
+    errors: null,
+  });
+}
+
 async function deleteAccount(req, res) {
   const accountId = parseInt(req.params.account_id);
   const jwtData = res.locals.accountData;
@@ -318,6 +345,7 @@ module.exports = {
   updateAccount,
   changePassword,
   buildManageAccounts,
+  deleteConfirmView,
   deleteAccount,
   logout,
 };

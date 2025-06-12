@@ -665,6 +665,22 @@ label {
   text-decoration: none;
 }
 
+.delete-button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: none;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.delete-button:hover,
+.delete-button:focus {
+  background-color: #c82333;
+  color: white;
+  text-decoration: none;
+}
+
 .inline-form {
   display: inline;
   margin: 0;

@@ -61,6 +61,11 @@ router.get(
 
 router.get("/logout", utilities.handleErrors(accountController.logout));
 
+router.get("/delete-account/:account_id",
+  utilities.checkAdmin,
+  utilities.handleErrors(accountController.deleteConfirmView)
+);
+
 router.post(
   "/delete-account/:account_id",
   utilities.checkAdmin,
